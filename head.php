@@ -75,10 +75,26 @@ $head[] = new HTML(tag: 'script', attributes: [
 ]);
 $head[] = new HTML(tag: 'script', attributes: [
     'type' => 'text/javascript',
+    'src' => '/static/js/approach/approach.utility.js',
+]);
+$head[] = new HTML(tag: 'script', attributes: [
+    'type' => 'module',
+    'src' => '/static/js/noobscience/questionaire.js',
+]);
+$head[] = new HTML(tag: 'script', attributes: [
+    'type' => 'text/javascript',
+    'src' => 'https://code.jquery.com/ui/1.13.2/jquery-ui.js',
+]);
+$head[] = new HTML(tag: 'script', attributes: [
+    'type' => 'text/javascript',
     'src' => 'https://cdn.tailwindcss.com',
 ]);
 $head[] = new HTML(tag: 'link', attributes: [
     'href' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css',
+    'rel' => 'stylesheet',
+], selfContained: true);
+$head[] = new HTML(tag: 'link', attributes: [
+    'href'=> '//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css',
     'rel' => 'stylesheet',
 ], selfContained: true);
 $head[] = new HTML(tag: 'link', attributes: [
@@ -88,3 +104,18 @@ $head[] = new HTML(tag: 'link', attributes: [
 $head[] = new HTML(tag: 'script', attributes: [
     'src' => '/static/js/main.js',
 ]);
+$moduleCode = <<<JS
+import { Compositor } from "https://static.suiteux.com/js/compositor.v3.js?"
+addScopeJS(['Approach','Compositor','active'], {} );
+
+// Init Compositor
+Approach.Compositor.active = new Compositor({
+    init:{
+        selector: '#Stage'
+    },
+    debug: true
+});
+JS;
+$head[] = new HTML(tag: 'script', attributes: [
+    'type' =>'module',
+], content: $moduleCode);
