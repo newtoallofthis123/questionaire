@@ -105,16 +105,11 @@ $head[] = new HTML(tag: 'script', attributes: [
     'src' => '/static/js/main.js',
 ]);
 $moduleCode = <<<JS
-import { Compositor } from "https://static.suiteux.com/js/compositor.v3.js?"
-addScopeJS(['Approach','Compositor','active'], {} );
+import { Questionaire } from "/static/js/noobscience/questionaire.js";
 
-// Init Compositor
-Approach.Compositor.active = new Compositor({
-    init:{
-        selector: '#Stage'
-    },
-    debug: true
-});
+addScopeJS(['NoobScience','Questionaire','main'], {});
+
+NoobScience.Questionaire.main = new Questionaire({})
 JS;
 $head[] = new HTML(tag: 'script', attributes: [
     'type' =>'module',
