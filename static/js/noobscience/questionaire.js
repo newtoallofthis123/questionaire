@@ -5,12 +5,11 @@ NoobScience.Questionaire.main = function(config = {}) {
     let $elf = this;
 
     $elf.config = {
-        select: {
-            selector: '#question',
+        tabs: {
+            selector: '#tabs',
         },
-        selectParent: {
-            selector: '#questions',
-            children: '#questions>div'
+        tabBtn: {
+            selector: '.tabBtn',
         },
         start: {
             selector: '#start',
@@ -19,89 +18,51 @@ NoobScience.Questionaire.main = function(config = {}) {
     overwriteDefaults(config, $elf.config);
 
     $elf.init = function() {
-        $($elf.config.select.selector).each(function() {
-            $(this).on('change', dispatch.onChange);
-        })
-        $($elf.config.selectParent.children).each(function() {
-            $(this).on('change', dispatch.onChange);
-        })
+        $($elf.config.tabs.selector).children().hide()
+        $($elf.config.tabBtn.selector).hide()
+
+        let tabBtns = $($elf.config.tabBtn.selector);
+        for (let i = 0; i < tabBtns.length; i++) {
+            if ($(tabBtns[i]).data('enable-default') == "on") {
+                $(tabBtns[i]).show();
+                break;
+            }
+        }
+
+        $(`${$elf.config.tabBtn.selector}`).on('click.tabChange', dispatch.tabChange);
+
+        // any select in the children of the tabs, will trigger the onChange event 
+        $($elf.config.tabs.selector).children().find('select').on('change.onChange', dispatch.onChange);
+
         $($elf.config.start.selector).on('click.start', dispatch.onStart);
     };
 
-    // since we are not yet sure of the options, we will hard code them
-    let options = {
-        'coolness': {
-            "options": [{
-                'I am very cool': ['duration', 'salary']
-            },
-            { 'I am not cool': ['duration', 'salary'] },
-            { 'I am not sure': ['duration', 'salary'] }
-            ]
-        },
-        'duration': {
-            "options": [{
-                '1 year': ['salary']
-            },
-            { '2 years': ['salary'] },
-            { '3 years': ['salary'] }
-            ]
-        },
-        'salary': {
-            "options": [{
-                '100,000': []
-            },
-            { '200,000': [] },
-            { '300,000': [] }
-            ]
-        }
-    }
-
     let dispatch = {
+        tabChange: function() {
+            let target = $(this).data('enable');
+            let select = $elf.config.tabs.selector;
+            $(select).children().hide();
+            $(`#${target}`).show();
+        },
         onChange: function() {
-            // get the selector of the option selected
-            let selected = $(this).val();
-            // get the data attributes of the selected option
-            let dataAttributes = $(this).find('option:selected').data('activate').split(';');
-
-            $($elf.config.selectParent.children).empty();
-            dataAttributes.map(function(attribute) {
-                $($elf.config.selectParent.children).append(utilities.makeSelect(options[attribute]));
-            });
+            let targets = $(this).find('option:selected').first().data('activate').split(';');
+            targets.push($(this).parent().attr('id'));
+            let select = $elf.config.tabs.selector;
+            let tabs = Array.from($(select).children())
+            for (let i = 0; i < tabs.length; i++) {
+                $(tabs[i]).hide();
+            }
+            $(this).parent().show();
+            $($elf.config.tabBtn.selector).hide();
+            for (let i = 0; i < targets.length; i++) {
+                $(`${$elf.config.tabBtn.selector}[data-enable="${targets[i]}"]`).show();
+            }
         },
         onStart: function() {
-            let select = $elf.config.selectParent.selector;
-            // set display to block
-            $(select).removeClass('hidden');
+            let select = $elf.config.tabs.selector;
+            $(select).show();
         }
     };
-
-    let utilities = {
-        makeOption: function(text, activates = []) {
-            let ele = $('<option>').val(text).text(text)
-            // add data-activate attribute to the option
-            console.log(activates);
-            if (activates.length > 0) {
-                ele.attr('data-activate', activates.join(';'));
-            }
-            return ele;
-        },
-        makeSelect: function(options) {
-            let select = $('<select>')
-            let classes = ['border-2 ', 'border-gray-300 ', 'rounded-md ', 'w-full ', 'p-2 ', 'mt-3 '];
-            classes.map(function(className) {
-                select.addClass(className);
-            });
-            // options["options"].map(function(option) {
-            //     console.log(Object.keys(option));
-            //     select.append(utilities.makeOption(Object.keys(option)[0], option[Object.keys(option)[0]]));
-            // });
-            for (let i = 0; i < options["options"].length; i++) {
-                let option = options["options"][i];
-                select.append(utilities.makeOption(Object.keys(option)[0], option[Object.keys(option)[0]]));
-            }
-            return select;
-        }
-    }
 
     $elf.init();
     return $elf;

@@ -1,0 +1,38 @@
+<div id="questionaire" class="w-full">
+    <div class="grid grid-cols-4 gap-2">
+        <button class="py-0.5 border-2 border-black text-center tabBtn" data-enable-default="on" data-enable="tab1">Introduction</button>
+        <button class="py-0.5 border-2 border-black text-center tabBtn" data-enable="tab2">Salary</button>
+        <button class="py-0.5 border-2 border-black text-center tabBtn" data-enable="tab3">Age</button>
+        <button class="py-0.5 border-2 border-black text-center tabBtn" data-enable="tab4">Time</button>
+    </div>
+    <div id="tabs" class="w-3/5">
+        <div id="tab1" class="mt-2">
+            <select name="introduction" id="intro" class="w-full mt-2 border-2 border-black rounded-md p-1 text-lg text-center">
+                <option value="wow" data-activate="tab2;tab4">Wow</option>
+                <option value="cool" data-activate="tab2">Cool</option>
+                <option value="nice" data-activate="tab2">Nice</option>
+            </select>
+        </div>
+        <div id="tab2" class="mt-2">
+            <select name="salary" id="salary" class="w-full mt-2 border-2 border-black rounded-md p-1 text-lg text-center">
+                <option value="1000" data-activate="tab3">1000</option>
+                <option value="2000" data-activate="tab4">2000</option>
+                <option value="3000" data-activate="tab3;tab4">3000</option>
+            </select>
+        </div>
+        <div id="tab3" class="mt-2">
+            <select name="age" id="age" class="w-full mt-2 border-2 border-black rounded-md p-1 text-lg text-center">
+                <option value="20" data-activate="tab4">20</option>
+                <option value="30" data-activate="tab4">30</option>
+                <option value="40" data-activate="tab4">40</option>
+            </select>
+        </div>
+        <div id="tab4" class="mt-2">
+            <select name="time" id="time" class="w-full mt-2 border-2 border-black rounded-md p-1 text-lg text-center">
+                <option value="1" data-activate="tab5;tab1">1 hour</option>
+                <option value="2" data-activate="tab5;tab1">2 hour</option>
+                <option value="3" data-activate="tab5;tab1">3 hour</option>
+            </select>
+        </div>
+    </div>
+</div>
