@@ -46,14 +46,13 @@ NoobScience.Questionaire.main = function(config = {}) {
         },
         onChange: function() {
             let targets = $(this).find('option:selected').first().data('activate').split(';');
-            targets.push($(this).parent().attr('id'));
+            // targets.push($(this).parent().attr('id')); // this sort of fixes some stuff
             let select = $elf.config.tabs.selector;
             let tabs = Array.from($(select).children())
             for (let i = 0; i < tabs.length; i++) {
                 $(tabs[i]).hide();
             }
             $(this).parent().show();
-            $($elf.config.tabBtn.selector).hide();
             for (let i = 0; i < targets.length; i++) {
                 $(`${$elf.config.tabBtn.selector}[data-enable="${targets[i]}"]`).show();
             }

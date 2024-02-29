@@ -28,4 +28,3 @@ $controls[] = new HTML(tag: 'button', classes: ['border-0 ', 'rounded-md ', 'bg-
 $main[] = new HTML(tag: 'p', attributes: ['id' => 'question_text'], classes: ['text-center ', 'pt-3 ', 'text-lg '], content: 'Click start to begin the questionaire.');
 $main[] = $content = new HTML(tag: 'div', attributes: ['id' => 'content'], classes: ['flex ', 'flex-row ', 'justify-center ', 'items-center ', 'gap-3 ', 'mt-3']);
 $content->content = $tabs;
-$main[] = new HTML(tag: 'button', classes: ['border-0 ', 'rounded-md ', 'bg-red-400 ', 'p-2 ', 'mt-3 ', 'w-1/5 '], content: 'Submit', attributes: ['id' => 'start']);
