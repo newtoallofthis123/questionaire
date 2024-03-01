@@ -45,7 +45,8 @@ NoobScience.Questionaire.main = function(config = {}) {
             $(`#${target}`).show();
         },
         onChange: function() {
-            let targets = $(this).find('option:selected').first().data('activate').split(';');
+            let raw_targets = $(this).find('option:selected').first().data('activate');
+            let targets = JSON.parse(JSON.stringify(raw_targets));
             // targets.push($(this).parent().attr('id')); // this sort of fixes some stuff
             let select = $elf.config.tabs.selector;
             let tabs = Array.from($(select).children())
